@@ -1,0 +1,11 @@
+/config/*
+
+/videos/*
+
+
+!/config/.gitkeep
+!/videos/.gitkeep
+!/coco/.gitkeep
+!/frames/.gitkeep
+!/images/.gitkeep
+
