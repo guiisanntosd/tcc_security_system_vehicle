@@ -32,7 +32,7 @@ down_line_position = middle_line_position + 15
 
 
 # Store Coco Names in a list
-classesFile = r"./coco/coco.names"
+classesFile = r"./config/coco.names"
 
 classNames = open(classesFile).read().strip().split("\n")
 print(classNames)
@@ -176,7 +176,7 @@ def realTime():
         # Set the input of the network
         net.setInput(blob)
         layersNames = net.getLayerNames()
-        outputNames = [(layersNames[i]) for i in net.getUnconnectedOutLayers()]
+        outputNames = [(layersNames[i - 1]) for i in net.getUnconnectedOutLayers()]
         # Feed data to the network
         outputs = net.forward(outputNames)
 
