@@ -118,7 +118,7 @@ class Detector:
                 2,
             )
 
-            cv2.imshow("Object Detection", frame)
+            cv2.imshow("Security System", frame)
 
             key = cv2.waitKey(1) & 0xFF
 
