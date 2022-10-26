@@ -1,8 +1,9 @@
 /config/*
-
 /videos/*
+/coco/*
+/data/*
 
-
+!/data/.gitkeep
 !/config/.gitkeep
 !/videos/.gitkeep
 !/coco/.gitkeep
