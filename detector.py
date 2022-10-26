@@ -1,6 +1,7 @@
 import cv2
 import time
 import numpy as np
+from pygame import mixer
 
 np.random.seed(20)
 
@@ -19,6 +20,10 @@ class Detector:
         self.net.setInputSwapRB(True)
 
         self.readClasses()
+
+    def sound(self):
+        mixer.init()
+        mixer.Sound(r"./sounds/beep.wav").play()
 
     def readClasses(self):
         with open(self.classes, "rt") as f:
@@ -54,6 +59,7 @@ class Detector:
 
             if len(indices) != 0:
                 for i in range(0, len(indices)):
+                    self.sound()
                     bbox = bboxs[np.squeeze(indices[i])]
                     classConfidence = confidences[np.squeeze(indices[i])]
                     classId = classIds[np.squeeze(indices[i])]
