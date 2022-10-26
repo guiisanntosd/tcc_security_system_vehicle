@@ -13,7 +13,7 @@ tracker = EuclideanDistTracker()
 
 # Initialize the videocapture object
 # cap = cv2.VideoCapture('video.mp4')
-cap = cv2.VideoCapture("/Users/santos/www/projects/tcc/videos/tcc.mp4")
+cap = cv2.VideoCapture(r"./videos/tcc.mp4")
 
 input_size = 320
 
@@ -32,7 +32,7 @@ down_line_position = middle_line_position + 15
 
 
 # Store Coco Names in a list
-classesFile = r"./coco/coco.labels"
+classesFile = r"./coco/coco.names"
 
 classNames = open(classesFile).read().strip().split("\n")
 print(classNames)
@@ -44,8 +44,8 @@ required_class_index = [2, 3, 5, 7]
 detected_classNames = []
 
 ## Model Files
-modelConfiguration = "/Users/santos/www/projects/tcc/config/yolov3-320.cfg"
-modelWeigheights = "/Users/santos/www/projects/tcc/config/yolov3-320.weights"
+modelConfiguration = r"./config/yolov3-320.cfg"
+modelWeigheights = r"./config/yolov3-320.weights"
 
 # configure the network model
 net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeigheights)
@@ -159,9 +159,9 @@ def postProcess(outputs, img):
             detection.append([x, y, w, h, required_class_index.index(classIds[i])])
 
     # Update the tracker for each object
-    boxes_ids = tracker.update(detection)
-    for box_id in boxes_ids:
-        count_vehicle(box_id, img)
+    # boxes_ids = tracker.update(detection)
+    # for box_id in boxes_ids:
+    # count_vehicle(box_id, img)
 
 
 def realTime():
@@ -176,76 +176,12 @@ def realTime():
         # Set the input of the network
         net.setInput(blob)
         layersNames = net.getLayerNames()
-        outputNames = [(layersNames[i - 1]) for i in net.getUnconnectedOutLayers()]
+        outputNames = [(layersNames[i]) for i in net.getUnconnectedOutLayers()]
         # Feed data to the network
         outputs = net.forward(outputNames)
 
         # Find the objects from the network output
         postProcess(outputs, img)
-
-        # Draw the crossing lines
-
-        cv2.line(
-            img, (0, middle_line_position), (iw, middle_line_position), (255, 0, 255), 2
-        )
-        cv2.line(img, (0, up_line_position), (iw, up_line_position), (0, 0, 255), 2)
-        cv2.line(img, (0, down_line_position), (iw, down_line_position), (0, 0, 255), 2)
-
-        # Draw counting texts in the frame
-        cv2.putText(
-            img,
-            "Up",
-            (110, 20),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            font_size,
-            font_color,
-            font_thickness,
-        )
-        cv2.putText(
-            img,
-            "Down",
-            (160, 20),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            font_size,
-            font_color,
-            font_thickness,
-        )
-        cv2.putText(
-            img,
-            "Car:        " + str(up_list[0]) + "     " + str(down_list[0]),
-            (20, 40),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            font_size,
-            font_color,
-            font_thickness,
-        )
-        cv2.putText(
-            img,
-            "Motorbike:  " + str(up_list[1]) + "     " + str(down_list[1]),
-            (20, 60),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            font_size,
-            font_color,
-            font_thickness,
-        )
-        cv2.putText(
-            img,
-            "Bus:        " + str(up_list[2]) + "     " + str(down_list[2]),
-            (20, 80),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            font_size,
-            font_color,
-            font_thickness,
-        )
-        cv2.putText(
-            img,
-            "Truck:      " + str(up_list[3]) + "     " + str(down_list[3]),
-            (20, 100),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            font_size,
-            font_color,
-            font_thickness,
-        )
 
         # Show the frames
         cv2.imshow("Output", img)
@@ -270,7 +206,7 @@ def realTime():
 
 
 # image_file = "/Users/santos/www/projects/tcc/frame/00429.jpg"
-image_file = "/Users/santos/www/projects/tcc/tests/road.png"
+image_file = "/Users/santos/www/projects/tcc/images/road.png"
 
 
 def from_static_image(image):

@@ -2,6 +2,7 @@
 /videos/*
 /coco/*
 /data/*
+/images/*
 
 !/data/.gitkeep
 !/config/.gitkeep
